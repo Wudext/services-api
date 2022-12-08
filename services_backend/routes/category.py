@@ -6,7 +6,8 @@ from ..models.database import Category, Button
 
 category = APIRouter()
 
-@category.post("/", response_model=CategoryCreate)
+
+@category.post("/", response_model=CategoryGet)
 def create_category(category_inp: CategoryCreate):
     category = Category(**category_inp.dict())
     db.session.add(category)
@@ -40,7 +41,7 @@ def remove_category(category_id: int):
     db.session.flush()
 
 
-@category.patch("/{category_id}", response_model=CategoryUpdate)
+@category.patch("/{category_id}", response_model=CategoryGet)
 def update_category(category_inp: CategoryUpdate, category_id: int):
     category = db.session.query(Category).filter(Category.id == category_id).one_or_none()
     if category is None:
